@@ -4,7 +4,9 @@ const Actions = require('./actions-model');
 const router = express.Router();
 
 // - Returns an array of actions (or an empty array) as the body of the response.
-router.get('/', (req,res) => {})
+router.get('/', (req,res) => {
+    
+})
 
 router.get('/', (req,res) => {})
 

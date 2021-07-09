@@ -36,7 +36,8 @@ router.post('/', (req,res, next) =>{
     }
     else{
         Projects.insert(req.body)
-        .then(project => res.json(project))
+        .then(project => {
+            res.json(project)})
         .catch(next)
         }
     })
@@ -62,18 +63,20 @@ router.put('/:id', checkProjectID, (req,res,next) => {
 
 // - Returns no response body.
 // - If there is no project with the given `id` it responds with a status code 404.
-router.delete('/:id',checkProjectID, (req,res,next)=>{
+router.delete('/:id', checkProjectID, (req,res,next)=>{
     Projects.remove(req.params.id)
-    .then(()=>{
-        res.status(200).json({
-            message: 'The project was deleted'
-        })
+    .then((project) => {
+        console.log(`${project} was deleted`)
     })
     .catch(next)
 })
 
 // - Returns an array of actions (could be empty) belonging to a project with the given `id`.
 // - If there is no project with the given `id` it responds with a status code 404.
-router.get('/:id/actions', (req,res)=>{})
+router.get('/:id/actions', checkProjectID, (req,res,next)=>{
+    Projects.getProjectActions(req.params.id)
+    .then(actions => res.json(actions))
+    .catch(next)
+})
 
 module.exports = router
