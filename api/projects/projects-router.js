@@ -1,14 +1,14 @@
 // Write your "projects" router here!
 const express = require('express');
 const Projects = require('./projects-model');
-const {checkProjectID} = require('./projects-middleware')
+const { checkProjectID } = require('./projects-middleware')
 const router = express.Router();
 
 
 // - Returns an array of projects as the body of the response.
 // - If there are no projects it responds with an empty array.
 router.get('/', (req,res,next) => {
-    Projects.get()
+    Projects.get(req.params.id)
     .then(projects => {
         if(projects.length === 0){
             res.json([])
@@ -21,7 +21,7 @@ router.get('/', (req,res,next) => {
 
 // - Returns a project with the given `id` as the body of the response.
 // - If there is no project with the given `id` it responds with a status code 404.
-router.get('/:id',checkProjectID, (req,res,next) =>{
+router.get('/:id', checkProjectID, (req,res,next) =>{
     res.json(req.project)
 })
 
