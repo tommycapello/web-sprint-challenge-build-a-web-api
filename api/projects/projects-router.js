@@ -46,19 +46,11 @@ router.post('/', (req,res, next) =>{
     // - If there is no project with the given `id` it responds with a status code 404.
     // - If the request body is missing any of the required fields it responds with a status code 400.
 router.put('/:id', checkProjectID, (req,res,next) => {
-    const { name, description, completed } = req.body
-    if(!name || !description || !completed){
-            res.status(400).json({
-                message: 'Please complete all the required fields for the update'
-            })
-        }
-    else{
         Projects.update(req.params.id, req.body)
         .then(project => {
                 res.json(project)
             })
-        .catch(next)}
-    })
+        .catch(next)})
 
 
 // - Returns no response body.
